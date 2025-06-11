@@ -20,6 +20,8 @@ public abstract class RepositorioCSV<T> implements IRepositorio<T> {
 	public abstract String converterParaCSV(T entidade);
 	public abstract T converterDeCSV(String linha);
 
+	// metodo padrao para salvar em arquivo csv
+	
 	@Override
 	public void salvar(List<T> entidades) {
 		try (BufferedWriter writer = new BufferedWriter(new FileWriter(caminhoArquivo))) {
@@ -31,6 +33,8 @@ public abstract class RepositorioCSV<T> implements IRepositorio<T> {
 			System.err.println("Erro ao salvar arquivo: " + e.getMessage());
 		}
 	}
+	
+	// metodo padrao para carregar um arquivo csv
 
 	@Override
 	public List<T> carregar() {
