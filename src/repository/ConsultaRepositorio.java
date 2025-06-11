@@ -4,7 +4,7 @@ import model.Consulta;
 
 public class ConsultaRepositorio extends RepositorioCSV<Consulta> {
 
-	public ConsultaRepositorio(String caminhoArquivo) {
+	public ConsultaRepositorio() {
 		super("consultas.csv");
 	}
 
