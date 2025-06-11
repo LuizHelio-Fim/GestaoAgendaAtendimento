@@ -4,7 +4,7 @@ import model.PedidoAgendamento;
 
 public class PedidoAgendamentoRepositorio extends RepositorioCSV<PedidoAgendamento> {
 
-	public PedidoAgendamentoRepositorio(String caminhoArquivo) {
+	public PedidoAgendamentoRepositorio() {
 		super("Pedidos_agendamento.csv");
 	}
 
