@@ -1,28 +1,30 @@
+package model;
 
 public class Cliente extends Usuario {
-public Cliente(int id, String nome, String email, String senha) {
-		super(id, nome, email, senha);
-		
+	
+	private String telefone;
+	
+	// Construtores
+	public Cliente() {}
+	
+	public Cliente(int id, String cpf, String nome, String email, String senha, String telefone) {
+		super(id, cpf, nome, email, senha);
+		this.telefone = telefone;
 	}
-private PerfilCliente perfilClente;
-private List<PedidoAgendamento> pedidoAgendamento;
-private List<Consulta> consultas;
-
-
-public PedidoAgendamento solicitarAgendamento(psicologo, dataHora) {
 	
-}
-public boolean cacelarPedido(id) {
+	// Getters e Setters
+
+	public String getTelefone() {
+		return telefone;
+	}
+
+	public void setTelefone(String telefone) {
+		this.telefone = telefone;
+	}
 	
-}
-public void salvarDados() {
-	
-}
-public void carregarDados() {
-	
-}
-
+	@Override
+	public String getResumo() {
+		return "Cliente: " + getNome() + " - Tel: " + this.telefone;
+	}
 
 }
-
-
