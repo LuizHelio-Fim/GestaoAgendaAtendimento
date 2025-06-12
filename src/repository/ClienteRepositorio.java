@@ -31,7 +31,6 @@ public class ClienteRepositorio extends RepositorioCSV<Cliente> {
         		Integer.parseInt(partes[7]), 
         		partes[8]);
         
-
         return new Cliente(
             Integer.parseInt(partes[0]),
             partes[1],
