@@ -1,0 +1,2 @@
+1,98765432100,Dr. João,joao@email.com,senha456,12345-ES,Psicoterapia,10,Especialista em jovens adultos,Seg a Sex 8h-18h
+2,13919054741,Dr. Madu,madugiori@gmail.com,123456,54321-ES,Neuropsicologia,10,Especialista em neurodivergencia,Seg a Sex 9h-16h
