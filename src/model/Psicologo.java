@@ -1,18 +1,23 @@
 package model;
 
+import model.perfil.PerfilPsicologo;
+
 public class Psicologo extends Usuario {
 
     private String crp;
     private String especialidade;
+    private PerfilPsicologo perfil;
+    
+    // Construtores
 
-    // Construtor vazio
     public Psicologo() {}
 
-    // Construtor completo
-    public Psicologo(int id, String cpf, String nome, String email, String senha, String crp, String especialidade) {
+    public Psicologo(int id, String cpf, String nome, String email, 
+    		String senha, String crp, String especialidade, PerfilPsicologo perfil) {
         super(id, cpf, nome, email, senha);
         this.crp = crp;
         this.especialidade = especialidade;
+        this.setPerfil(perfil);
     }
 
     // Getters e Setters
@@ -32,6 +37,14 @@ public class Psicologo extends Usuario {
     public void setEspecialidade(String especialidade) {
     	this.especialidade = especialidade;
     }
+    
+    public PerfilPsicologo getPerfil() {
+		return perfil;
+	}
+
+	public void setPerfil(PerfilPsicologo perfil) {
+		this.perfil = perfil;
+	}
 
     @Override
     public String getResumo() {
