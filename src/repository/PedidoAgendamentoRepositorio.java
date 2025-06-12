@@ -10,16 +10,25 @@ public class PedidoAgendamentoRepositorio extends RepositorioCSV<PedidoAgendamen
 
 	@Override
 	public String converterParaCSV(PedidoAgendamento p) {
-		// TODO Auto-generated method stub
-		return null;
+		return p.getId() + "," +
+				p.getCpfCliente() + "," +
+				p.getCpfPsicologo() + "," +
+				p.getDataHoraSolicitada() + "," +
+				p.getMensagem() + "," +
+				p.getStatus();
 	}
 
 	@Override
 	public PedidoAgendamento converterDeCSV(String linha) {
-		String[] partes = linha.split(",");
-		PedidoAgendamento p = new PedidoAgendamento();
-		// TODO Auto-generated method stub
-		return null;
+		String[] partes = linha.split(",", - 1); 	// -1 para garantir a leitura de campos vazios
+		
+		return new PedidoAgendamento(
+				Integer.parseInt(partes[0]),
+				partes[1],
+				partes[2],
+				partes[3],
+				partes[4],
+				partes[6]
+		);
 	}
-
 }

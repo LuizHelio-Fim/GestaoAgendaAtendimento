@@ -10,18 +10,24 @@ public class ConsultaRepositorio extends RepositorioCSV<Consulta> {
 
 	@Override
 	public String converterParaCSV(Consulta c) {
-		// TODO Auto-generated method stub
-		return null;
+		return c.getId() + "," +
+				c.getCpfCliente() + "," +
+				c.getCpfPsicologo() + "," +
+				c.getDataHora() + "," +
+				c.getStatus();
 	}
 
 	@Override
 	public Consulta converterDeCSV(String linha) {
-		String[] partes = linha.split(",");
-		Consulta c = new Consulta();
-		// TODO Auto-generated method stub
-		return null;
+		String[] partes = linha.split(",", -1);		// -1 para garantir a leitura de campos vazios
+		
+		return new Consulta(
+				Integer.parseInt(partes[0]),
+				partes[1],
+				partes[2],
+				partes[3],
+				partes[4]
+		);
+		
 	}
-	
-	
-
 }
