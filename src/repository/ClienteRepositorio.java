@@ -6,7 +6,7 @@ import model.perfil.PerfilCliente;
 public class ClienteRepositorio extends RepositorioCSV<Cliente> {
 
     public ClienteRepositorio() {
-        super("clientes.csv");
+        super("data/clientes.csv");
     }
 
     @Override

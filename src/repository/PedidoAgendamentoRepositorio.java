@@ -5,7 +5,7 @@ import model.PedidoAgendamento;
 public class PedidoAgendamentoRepositorio extends RepositorioCSV<PedidoAgendamento> {
 
 	public PedidoAgendamentoRepositorio() {
-		super("Pedidos_agendamento.csv");
+		super("data/Pedidos_agendamento.csv");
 	}
 
 	@Override

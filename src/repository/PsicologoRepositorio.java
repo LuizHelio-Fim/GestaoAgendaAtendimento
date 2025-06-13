@@ -6,7 +6,7 @@ import model.perfil.PerfilPsicologo;
 public class PsicologoRepositorio extends RepositorioCSV<Psicologo>{
 	
 	public PsicologoRepositorio() {
-        super("psicologos.csv");
+        super("data/psicologos.csv");
     }
 
     @Override

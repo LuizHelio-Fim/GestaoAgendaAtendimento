@@ -5,7 +5,7 @@ import model.Consulta;
 public class ConsultaRepositorio extends RepositorioCSV<Consulta> {
 
 	public ConsultaRepositorio() {
-		super("consultas.csv");
+		super("data/consultas.csv");
 	}
 
 	@Override
