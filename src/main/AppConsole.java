@@ -13,10 +13,13 @@ import model.PedidoAgendamento;
 import model.perfil.PerfilCliente;
 import model.perfil.PerfilPsicologo;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.Scanner;
 
 public class AppConsole {
     public static void main(String[] args) {
+    	verificarArquivosCSV();
         Scanner scanner = new Scanner(System.in);
         AutenticacaoController auth = new AutenticacaoController();
 
@@ -42,6 +45,39 @@ public class AppConsole {
         }
 
         scanner.close();
+    }
+    
+    public static void verificarArquivosCSV() {
+        String[] arquivos = {
+            "data/clientes.csv",
+            "data/psicologos.csv",
+            "data/pedidos_agendamento.csv",
+            "data/consultas.csv"
+        };
+
+        System.out.println("🔍 Verificando arquivos CSV...");
+
+        for (String caminho : arquivos) {
+            File arquivo = new File(caminho);
+            if (arquivo.exists()) {
+                System.out.println("✅ Arquivo encontrado: " + caminho);
+            } else {
+                System.out.println("⚠️ Arquivo NÃO encontrado: " + caminho);
+                try {
+                    if (arquivo.getParentFile() != null) {
+                        arquivo.getParentFile().mkdirs(); // cria a pasta se necessário
+                    }
+                    boolean criado = arquivo.createNewFile();
+                    if (criado) {
+                        System.out.println("📄 Arquivo criado automaticamente: " + caminho);
+                    }
+                } catch (IOException e) {
+                    System.err.println("❌ Erro ao criar o arquivo " + caminho + ": " + e.getMessage());
+                }
+            }
+        }
+
+        System.out.println("✅ Verificação de arquivos finalizada.\n");
     }
 
     private static void clienteMenu(String cpfCliente, Scanner scanner) {
