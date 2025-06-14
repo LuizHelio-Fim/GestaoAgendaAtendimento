@@ -14,39 +14,78 @@ public class CadastroClienteView extends JFrame {
         setSize(400, 350);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
-        setLayout(new GridLayout(8, 2, 5, 5));
 
-        // Campos
-        JTextField campoCpf = new JTextField();
-        JTextField campoNome = new JTextField();
-        JTextField campoEmail = new JTextField();
-        JTextField campoSenha = new JTextField();
-        JTextField campoTelefone = new JTextField();
-        JTextField campoSexo = new JTextField();
-        JTextField campoIdade = new JTextField();
-        JTextField campoObs = new JTextField();
+        setLayout(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(5,5,5,5);
+        gbc.anchor = GridBagConstraints.LINE_START;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.weightx = 1;
 
-        // Labels e campos
-        add(new JLabel("CPF:"));
-        add(campoCpf);
-        add(new JLabel("Nome:"));
-        add(campoNome);
-        add(new JLabel("Email:"));
-        add(campoEmail);
-        add(new JLabel("Senha:"));
-        add(campoSenha);
-        add(new JLabel("Telefone:"));
-        add(campoTelefone);
-        add(new JLabel("Sexo:"));
-        add(campoSexo);
-        add(new JLabel("Idade:"));
-        add(campoIdade);
-        add(new JLabel("Observações:"));
-        add(campoObs);
+        JTextField campoCpf = new JTextField(20);
+        JTextField campoNome = new JTextField(20);
+        JTextField campoEmail = new JTextField(20);
+        JTextField campoSenha = new JTextField(20);
+        JTextField campoTelefone = new JTextField(20);
+        JTextField campoSexo = new JTextField(20);
+        JTextField campoIdade = new JTextField(20);
+        JTextField campoObs = new JTextField(20);
 
+        int y = 0;
+
+        gbc.gridx = 0; gbc.gridy = y;
+        add(new JLabel("CPF:"), gbc);
+        gbc.gridx = 1;
+        add(campoCpf, gbc);
+
+        y++;
+        gbc.gridx = 0; gbc.gridy = y;
+        add(new JLabel("Nome:"), gbc);
+        gbc.gridx = 1;
+        add(campoNome, gbc);
+
+        y++;
+        gbc.gridx = 0; gbc.gridy = y;
+        add(new JLabel("Email:"), gbc);
+        gbc.gridx = 1;
+        add(campoEmail, gbc);
+
+        y++;
+        gbc.gridx = 0; gbc.gridy = y;
+        add(new JLabel("Senha:"), gbc);
+        gbc.gridx = 1;
+        add(campoSenha, gbc);
+
+        y++;
+        gbc.gridx = 0; gbc.gridy = y;
+        add(new JLabel("Telefone:"), gbc);
+        gbc.gridx = 1;
+        add(campoTelefone, gbc);
+
+        y++;
+        gbc.gridx = 0; gbc.gridy = y;
+        add(new JLabel("Sexo:"), gbc);
+        gbc.gridx = 1;
+        add(campoSexo, gbc);
+
+        y++;
+        gbc.gridx = 0; gbc.gridy = y;
+        add(new JLabel("Idade:"), gbc);
+        gbc.gridx = 1;
+        add(campoIdade, gbc);
+
+        y++;
+        gbc.gridx = 0; gbc.gridy = y;
+        add(new JLabel("Observações:"), gbc);
+        gbc.gridx = 1;
+        add(campoObs, gbc);
+
+        y++;
+        gbc.gridx = 0; gbc.gridy = y;
+        gbc.gridwidth = 2;
+        gbc.anchor = GridBagConstraints.CENTER;
         JButton botaoCadastrar = new JButton("Cadastrar");
-        add(new JLabel());
-        add(botaoCadastrar);
+        add(botaoCadastrar, gbc);
 
         botaoCadastrar.addActionListener(e -> {
             try {
