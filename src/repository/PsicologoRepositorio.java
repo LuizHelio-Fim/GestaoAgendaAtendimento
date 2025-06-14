@@ -27,6 +27,12 @@ public class PsicologoRepositorio extends RepositorioCSV<Psicologo>{
     public Psicologo converterDeCSV(String linha) {
         String[] partes = linha.split(",", -1);
 
+        // Proteção contra linhas incompletas
+        if (partes.length < 10) {
+            System.err.println("Linha inválida no psicologos.csv: " + linha);
+            return null;
+        }
+
         PerfilPsicologo perfil = new PerfilPsicologo(
             Integer.parseInt(partes[7]),
             partes[8],

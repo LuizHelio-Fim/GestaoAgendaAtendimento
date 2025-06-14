@@ -38,22 +38,25 @@ public abstract class RepositorioCSV<T> implements IRepositorio<T> {
 
 	@Override
 	public List<T> carregar() {
-		List<T> lista = new ArrayList<>();
-		File arquivo = new File(caminhoArquivo);
-		
-		if(!arquivo.exists()) return lista;
-		
-		try (BufferedReader reader = new BufferedReader(new FileReader(caminhoArquivo))) {
-			String linha;
-			
-			while((linha = reader.readLine()) != null) {
-				lista.add(converterDeCSV(linha));
-			}
-		} catch (IOException e) {
-			System.err.println("Erro ao carregar arquivo: " + e.getMessage());
-		}
-		
-		return lista;
+	    List<T> lista = new ArrayList<>();
+	    File arquivo = new File(caminhoArquivo);
+
+	    if (!arquivo.exists()) return lista;
+
+	    try (BufferedReader reader = new BufferedReader(new FileReader(caminhoArquivo))) {
+	        String linha;
+
+	        while ((linha = reader.readLine()) != null) {
+	            if (linha.trim().isEmpty()) continue;		 // Ignora linhas em branco
+	            T objeto = converterDeCSV(linha);
+	            if (objeto != null) lista.add(objeto); 		// Adiciona só se for válido
+	        }
+	    } catch (IOException e) {
+	        System.err.println("Erro ao carregar arquivo: " + e.getMessage());
+	    }
+
+	    return lista;
 	}
+
 
 }

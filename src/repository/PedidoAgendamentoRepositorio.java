@@ -28,7 +28,7 @@ public class PedidoAgendamentoRepositorio extends RepositorioCSV<PedidoAgendamen
 				partes[2],
 				partes[3],
 				partes[4],
-				partes[6]
+				partes[5]
 		);
 	}
 }

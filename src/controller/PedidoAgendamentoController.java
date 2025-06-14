@@ -52,4 +52,14 @@ public class PedidoAgendamentoController {
             JOptionPane.showMessageDialog(null, "Pedido não encontrado.");
         }
     }
+    
+    public List<String> gerarHorariosDisponiveis(String cpfPsicologo, String dataStr) {
+        return service.gerarHorariosDisponiveis(cpfPsicologo, dataStr);
+    }
+    
+    public List<String> gerarDiasDisponiveis(String cpfPsicologo, int diasFuturos) {
+        return service.gerarDiasDisponiveis(cpfPsicologo, diasFuturos);
+    }
+
+
 }

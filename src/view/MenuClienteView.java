@@ -2,10 +2,10 @@ package view;
 
 import controller.PedidoAgendamentoController;
 import controller.ConsultaController;
+import controller.PsicologoController;
 import model.Cliente;
 import model.Consulta;
 import model.PedidoAgendamento;
-import controller.PsicologoController;
 import model.Psicologo;
 
 import javax.swing.*;
@@ -51,42 +51,68 @@ public class MenuClienteView extends JFrame {
     }
 
     private void abrirTelaAgendamento() {
+        // 1. Selecionar psicólogo
         HashMap<String, String> mapaCpfPorNome = new HashMap<>();
-        for(Psicologo p : psicologoController.listarTodos()) {
-        	String label = "Dr(a). " + p.getNome() + " - " + p.getEspecialidade();
-        	mapaCpfPorNome.put(label, p.getCpf());
+        for (Psicologo p : psicologoController.listarTodos()) {
+            String label = "Dr(a). " + p.getNome() + " - " + p.getEspecialidade();
+            mapaCpfPorNome.put(label, p.getCpf());
         }
-        
+
         if (mapaCpfPorNome.isEmpty()) {
-        	JOptionPane.showMessageDialog(this, "Nenhum psicologo disponivel.");
-        	return;
+            JOptionPane.showMessageDialog(this, "Nenhum psicólogo disponível.");
+            return;
         }
-        
-        JComboBox<String> combo = new JComboBox<>(mapaCpfPorNome.keySet().toArray(new String[0]));
-        int confirm = JOptionPane.showConfirmDialog(this, combo, "Selecione um psicólogo", JOptionPane.OK_CANCEL_OPTION);
 
-        if (confirm != JOptionPane.OK_OPTION) return;
+        JComboBox<String> comboPsicologo = new JComboBox<>(mapaCpfPorNome.keySet().toArray(new String[0]));
+        int op = JOptionPane.showConfirmDialog(this, comboPsicologo, "Selecione um psicólogo", JOptionPane.OK_CANCEL_OPTION);
+        if (op != JOptionPane.OK_OPTION) return;
 
-        String selecao = (String) combo.getSelectedItem();
+        String selecao = (String) comboPsicologo.getSelectedItem();
         String cpfPsicologo = mapaCpfPorNome.get(selecao);
 
-        String dataHora = JOptionPane.showInputDialog(this, "Data e hora (ex: 2025-06-20 14:00):");
-        if (dataHora == null) return;
+        // 2. Selecionar data (dias disponíveis)
+        List<String> diasDisponiveis = pedidoController.gerarDiasDisponiveis(cpfPsicologo, 15);
+        if (diasDisponiveis.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Nenhum dia disponível nos próximos 15 dias.");
+            return;
+        }
 
+        JComboBox<String> comboData = new JComboBox<>(diasDisponiveis.toArray(new String[0]));
+        int diaEscolhido = JOptionPane.showConfirmDialog(this, comboData, "Selecione a data", JOptionPane.OK_CANCEL_OPTION);
+        if (diaEscolhido != JOptionPane.OK_OPTION) return;
+
+        String dataSelecionada = (String) comboData.getSelectedItem();
+
+        // 3. Selecionar horário disponível
+        List<String> horarios = pedidoController.gerarHorariosDisponiveis(cpfPsicologo, dataSelecionada);
+        if (horarios.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Nenhum horário disponível nesta data.");
+            return;
+        }
+
+        JComboBox<String> comboHorario = new JComboBox<>(horarios.toArray(new String[0]));
+        int horarioOk = JOptionPane.showConfirmDialog(this, comboHorario, "Selecione o horário", JOptionPane.OK_CANCEL_OPTION);
+        if (horarioOk != JOptionPane.OK_OPTION) return;
+
+        String dataHoraSelecionada = (String) comboHorario.getSelectedItem();
+
+        // 4. Mensagem opcional
         String mensagem = JOptionPane.showInputDialog(this, "Mensagem ao psicólogo:");
-        if (mensagem == null) return;
+        if (mensagem == null) mensagem = "";
 
         PedidoAgendamento pedido = new PedidoAgendamento(
-            0,
+            0,					// ignora o ID
             cliente.getCpf(),
             cpfPsicologo,
-            dataHora,
+            dataHoraSelecionada,
             mensagem,
             "PENDENTE"
         );
 
         pedidoController.solicitarAgendamento(pedido);
     }
+
+
 
     private void exibirConsultas() {
         List<Consulta> consultas = consultaController.listarPorCliente(cliente.getCpf());
