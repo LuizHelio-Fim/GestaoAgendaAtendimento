@@ -34,7 +34,7 @@ GestaoAgendaAtendimento/
 │   ├── repository/        # Persistência e manipulação dos arquivos CSV
 │   └── view/              # Telas Swing (Login, Cadastro, Menu, Agendamento, etc.)
 │
-├── data/                  # Arquivos CSV utilizados como banco de dados
+├── data/                  # Arquivos CSV utilizados como base de dados
 │
 ├── README.md              # Documentação do projeto
 └── ...
@@ -103,8 +103,8 @@ git clone https://github.com/LuizHelio-Fim/GestaoAgendaAtendimento.git
 ## 🧑‍💼 Autor
 
 **Luiz Hélio**  
-Estudante de Engenharia de Software — FAESA  
-[LinkedIn](https://www.linkedin.com/in/luiz-helio/) | [GitHub](https://github.com/LuizHelio-Fim)
+Estudante de Analise e Desenvolvimento de Sistema — FAESA  
+[LinkedIn](https://www.linkedin.com/in/luizheliofimfilho/) | [GitHub](https://github.com/LuizHelio-Fim)
 
 ---
 
