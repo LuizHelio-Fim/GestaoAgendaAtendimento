@@ -104,7 +104,7 @@ git clone https://github.com/LuizHelio-Fim/GestaoAgendaAtendimento.git
 
 **Luiz Hélio**  
 Estudante de Analise e Desenvolvimento de Sistema — FAESA  
-[LinkedIn](https://www.linkedin.com/in/luiz-helio/) | [GitHub](https://github.com/LuizHelio-Fim)
+[LinkedIn](https://www.linkedin.com/in/luizheliofimfilho/) | [GitHub](https://github.com/LuizHelio-Fim)
 
 ---
 
