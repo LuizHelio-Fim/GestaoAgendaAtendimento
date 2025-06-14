@@ -15,25 +15,31 @@ public class LoginView extends JFrame {
 
     public LoginView() {
         setTitle("Login");
-        setSize(300, 180);
+        setSize(300, 200);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
-        setLayout(new GridLayout(4, 1));
+        setLayout(new BorderLayout());
 
+        JPanel painelCampos = new JPanel(new GridLayout(4, 1));
         campoCpf = new JTextField();
         campoSenha = new JPasswordField();
 
-        JButton botaoEntrar = new JButton("Entrar");
+        painelCampos.add(new JLabel("CPF:"));
+        painelCampos.add(campoCpf);
+        painelCampos.add(new JLabel("Senha:"));
+        painelCampos.add(campoSenha);
+        add(painelCampos, BorderLayout.CENTER);
 
-        add(new JLabel("CPF:"));
-        add(campoCpf);
-        add(new JLabel("Senha:"));
-        add(campoSenha);
-        add(botaoEntrar);
+        JPanel painelBotoes = new JPanel();
+        JButton botaoEntrar = new JButton("Entrar");
+        JButton botaoCadastrar = new JButton("Cadastre-se");
+        painelBotoes.add(botaoEntrar);
+        painelBotoes.add(botaoCadastrar);
+        add(painelBotoes, BorderLayout.SOUTH);
 
         botaoEntrar.addActionListener(e -> {
-            String cpf = campoCpf.getText();
-            String senha = new String(campoSenha.getPassword());
+            String cpf = campoCpf.getText().trim();
+            String senha = new String(campoSenha.getPassword()).trim();
 
             AutenticacaoController auth = new AutenticacaoController();
             Usuario usuario = auth.autenticar(cpf, senha);
@@ -49,6 +55,24 @@ public class LoginView extends JFrame {
                 } else if (usuario instanceof Psicologo) {
                     new MenuPsicologoView((Psicologo) usuario);
                 }
+            }
+        });
+
+        botaoCadastrar.addActionListener(e -> {
+            Object[] opcoes = {"Cliente", "Psicólogo"};
+            int escolha = JOptionPane.showOptionDialog(this,
+                    "Você deseja se cadastrar como:",
+                    "Novo Cadastro",
+                    JOptionPane.DEFAULT_OPTION,
+                    JOptionPane.QUESTION_MESSAGE,
+                    null,
+                    opcoes,
+                    opcoes[0]);
+
+            if (escolha == 0) {
+                new CadastroClienteView();
+            } else if (escolha == 1) {
+                new CadastroPsicologoView();
             }
         });
 
