@@ -78,17 +78,24 @@ public class PedidoAgendamentoService {
         return true;
     }
 
-    public boolean rejeitarPedido(int idPedido) {
+    public boolean rejeitarPedido(int idPedido, String motivo) {
         List<PedidoAgendamento> pedidos = pedidoRepositorio.carregar();
+
         for (PedidoAgendamento p : pedidos) {
             if (p.getId() == idPedido) {
                 p.setStatus("REJEITADO");
+
+                // Anexa a justificativa no campo de mensagem
+                String mensagemOriginal = p.getMensagem();
+                p.setMensagem(mensagemOriginal + " | Motivo da recusa: " + motivo);
+
                 pedidoRepositorio.salvar(pedidos);
                 return true;
             }
         }
         return false;
     }
+
 
     private int gerarIdConsulta(List<Consulta> consultas) {
         int maior = 0;
