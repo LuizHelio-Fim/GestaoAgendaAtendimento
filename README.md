@@ -34,7 +34,7 @@ GestaoAgendaAtendimento/
 │   ├── repository/        # Persistência e manipulação dos arquivos CSV
 │   └── view/              # Telas Swing (Login, Cadastro, Menu, Agendamento, etc.)
 │
-├── data/                  # Arquivos CSV utilizados como banco de dados
+├── data/                  # Arquivos CSV utilizados como base de dados
 │
 ├── README.md              # Documentação do projeto
 └── ...
