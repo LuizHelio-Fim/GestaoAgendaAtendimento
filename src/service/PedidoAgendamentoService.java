@@ -105,8 +105,18 @@ public class PedidoAgendamentoService {
         if (psicologo == null) return Collections.emptyList();
 
         String horarioStr = psicologo.getPerfil().getHorarioAtendimento();
-        if (!horarioStr.matches("(?i)[A-Z][a-z]{2} a [A-Z][a-z]{2} \\d{2}h-\\d{2}h")) return Collections.emptyList();
+        if (horarioStr == null) return Collections.emptyList();
 
+        // Remove espaços extras
+        horarioStr = horarioStr.trim().replaceAll(" +", " ");
+
+        // Verificacao do formato esperado
+        if (!horarioStr.matches("(?i)[A-Z][a-z]{2} a [A-Z][a-z]{2} \\d{2}h-\\d{2}h")) {
+            System.err.println("Formato de horário inválido: " + horarioStr);
+            return Collections.emptyList();
+        }
+
+        // Divide em partes: ["Seg", "a", "Sex", "09h-18h"]
         String[] partes = horarioStr.split(" ");
         DayOfWeek diaInicio = traduzirDia(partes[0]);
         DayOfWeek diaFim = traduzirDia(partes[2]);
@@ -115,7 +125,7 @@ public class PedidoAgendamentoService {
         int horaInicio = Integer.parseInt(faixa[0].replace("h", ""));
         int horaFim = Integer.parseInt(faixa[1].replace("h", ""));
 
-        // Converte a data para corresponder ao metodo
+        // Converte a data
         LocalDate data;
         try {
             data = LocalDate.parse(dataStr);
@@ -123,45 +133,53 @@ public class PedidoAgendamentoService {
             return Collections.emptyList();
         }
 
+        // Validacao se o dia está dentro do intervalo informado
         DayOfWeek diaSelecionado = data.getDayOfWeek();
         if (diaSelecionado.getValue() < diaInicio.getValue() || diaSelecionado.getValue() > diaFim.getValue()) {
-            return Collections.emptyList();			 // Dia fora do intervalo permitido
+            return Collections.emptyList();
         }
 
-        // Geração dos blocos
+        // Geração de blocos de horário
         List<String> horariosGerados = new ArrayList<>();
         LocalTime atual = LocalTime.of(horaInicio, 0);
         LocalTime fim = LocalTime.of(horaFim, 0);
 
-        while (atual.plusMinutes(30).isBefore(fim.plusMinutes(1))) {
+        while (!atual.isAfter(fim.minusMinutes(30))) {
             horariosGerados.add(data + " " + atual);
-            atual = atual.plusMinutes(35);			 // 30min + 5min de intervalo
+            atual = atual.plusMinutes(35);           // 30min + 5min de intervalo
         }
 
-        // Horários ocupados por pedidos pendentes
+        // Consulta os pedidos pendentes para o psicólogo
         List<String> ocupados = listarPendentes().stream()
             .filter(p -> p.getCpfPsicologo().equals(cpfPsicologo) && p.getDataHoraSolicitada().startsWith(dataStr))
             .map(PedidoAgendamento::getDataHoraSolicitada)
             .collect(Collectors.toList());
 
-        // Horários ocupados por consultas agendadas
+        // Consulta os atendimentos já agendados
         ocupados.addAll(consultaService.listarPorPsicologo(cpfPsicologo).stream()
             .filter(c -> c.getDataHora().startsWith(dataStr))
             .map(Consulta::getDataHora)
             .collect(Collectors.toList()));
 
-        // Retorna somente os horários livres
+        // Retorna apenas horários que não estão ocupados
         return horariosGerados.stream()
             .filter(horario -> !ocupados.contains(horario))
             .collect(Collectors.toList());
     }
+
     
     public List<String> gerarDiasDisponiveis(String cpfPsicologo, int diasFuturos) {
         Psicologo psicologo = psicologoService.buscarPorCpf(cpfPsicologo);
         if (psicologo == null) return Collections.emptyList();
 
         String horarioStr = psicologo.getPerfil().getHorarioAtendimento();
-        if (!horarioStr.matches("(?i)[A-Z][a-z]{2} a [A-Z][a-z]{2} \\d{2}h-\\d{2}h")) return Collections.emptyList();
+        if(horarioStr == null) return Collections.emptyList();
+        horarioStr = horarioStr.trim().replaceAll(" +", " ");
+
+        if (!horarioStr.matches("(?i)[A-Z][a-z]{2} a [A-Z][a-z]{2} \\d{2}h-\\d{2}h")) {
+        	System.err.println("Formato de horário invalido: " + horarioStr);
+        	return Collections.emptyList();
+        }
 
         String[] partes = horarioStr.split(" ");
         DayOfWeek diaInicio = traduzirDia(partes[0]);
