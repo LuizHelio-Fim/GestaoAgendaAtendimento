@@ -5,16 +5,20 @@ import controller.ConsultaController;
 import model.Cliente;
 import model.Consulta;
 import model.PedidoAgendamento;
+import controller.PsicologoController;
+import model.Psicologo;
 
 import javax.swing.*;
 import java.awt.*;
 import java.util.List;
+import java.util.HashMap;
 
 public class MenuClienteView extends JFrame {
 
     private final Cliente cliente;
     private final PedidoAgendamentoController pedidoController;
     private final ConsultaController consultaController;
+    private final PsicologoController psicologoController = new PsicologoController();
 
     public MenuClienteView(Cliente cliente) {
         this.cliente = cliente;
@@ -47,14 +51,33 @@ public class MenuClienteView extends JFrame {
     }
 
     private void abrirTelaAgendamento() {
-        String cpfPsicologo = JOptionPane.showInputDialog(this, "CPF do psicólogo:");
-        String dataHora = JOptionPane.showInputDialog(this, "Data e hora (ex: 2025-06-20 14:00):");
-        String mensagem = JOptionPane.showInputDialog(this, "Mensagem ao psicólogo:");
+        HashMap<String, String> mapaCpfPorNome = new HashMap<>();
+        for(Psicologo p : psicologoController.listarTodos()) {
+        	String label = "Dr(a). " + p.getNome() + " - " + p.getEspecialidade();
+        	mapaCpfPorNome.put(label, p.getCpf());
+        }
+        
+        if (mapaCpfPorNome.isEmpty()) {
+        	JOptionPane.showMessageDialog(this, "Nenhum psicologo disponivel.");
+        	return;
+        }
+        
+        JComboBox<String> combo = new JComboBox<>(mapaCpfPorNome.keySet().toArray(new String[0]));
+        int confirm = JOptionPane.showConfirmDialog(this, combo, "Selecione um psicólogo", JOptionPane.OK_CANCEL_OPTION);
 
-        if (cpfPsicologo == null || dataHora == null || mensagem == null) return;
+        if (confirm != JOptionPane.OK_OPTION) return;
+
+        String selecao = (String) combo.getSelectedItem();
+        String cpfPsicologo = mapaCpfPorNome.get(selecao);
+
+        String dataHora = JOptionPane.showInputDialog(this, "Data e hora (ex: 2025-06-20 14:00):");
+        if (dataHora == null) return;
+
+        String mensagem = JOptionPane.showInputDialog(this, "Mensagem ao psicólogo:");
+        if (mensagem == null) return;
 
         PedidoAgendamento pedido = new PedidoAgendamento(
-            0, 						// será ignorado, ID pode ser gerado por lógica futura
+            0,
             cliente.getCpf(),
             cpfPsicologo,
             dataHora,

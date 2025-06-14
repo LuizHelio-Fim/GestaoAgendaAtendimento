@@ -24,7 +24,7 @@ public class AutenticacaoController {
 			return cliente;
 		}
 		
-		Psicologo psicologo = psicologoService.buscarPorCrp(cpf);
+		Psicologo psicologo = psicologoService.buscarPorCpf(cpf);
 		if (psicologo != null && psicologo.getSenha().equals(senha)) {
 			return psicologo;
 		}

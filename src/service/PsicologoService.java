@@ -23,9 +23,9 @@ public class PsicologoService {
 		return psicologoRepositorio.carregar();
 	}
 	
-	public Psicologo buscarPorCrp(String crp) {
+	public Psicologo buscarPorCpf(String cpf) {
 		return psicologoRepositorio.carregar().stream()
-				.filter(p -> p.getCrp().equals(crp))
+				.filter(p -> p.getCpf().equals(cpf))
 				.findFirst()
 				.orElse(null);
 	}

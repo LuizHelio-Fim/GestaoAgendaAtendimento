@@ -14,11 +14,9 @@ public class CadastroClienteView extends JFrame {
         setSize(400, 350);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
-        setLayout(new GridLayout(9, 2, 5, 5));
+        setLayout(new GridLayout(8, 2, 5, 5));
 
         // Campos
-        
-        JTextField campoId = new JTextField();
         JTextField campoCpf = new JTextField();
         JTextField campoNome = new JTextField();
         JTextField campoEmail = new JTextField();
@@ -29,9 +27,6 @@ public class CadastroClienteView extends JFrame {
         JTextField campoObs = new JTextField();
 
         // Labels e campos
-        
-        add(new JLabel("ID:"));
-        add(campoId);
         add(new JLabel("CPF:"));
         add(campoCpf);
         add(new JLabel("Nome:"));
@@ -55,8 +50,11 @@ public class CadastroClienteView extends JFrame {
 
         botaoCadastrar.addActionListener(e -> {
             try {
+                ClienteController controller = new ClienteController();
+                int novoId = controller.gerarProximoId();
+
                 Cliente cliente = new Cliente(
-                    Integer.parseInt(campoId.getText()),
+                    novoId,
                     campoCpf.getText(),
                     campoNome.getText(),
                     campoEmail.getText(),
@@ -68,7 +66,8 @@ public class CadastroClienteView extends JFrame {
                         campoObs.getText()
                     )
                 );
-                new ClienteController().cadastrarCliente(cliente);
+                controller.cadastrarCliente(cliente);
+                JOptionPane.showMessageDialog(this, "Cliente cadastrado com sucesso!");
                 dispose();
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(this, "Erro: " + ex.getMessage());

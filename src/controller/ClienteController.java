@@ -31,4 +31,12 @@ public class ClienteController {
 		return clienteService.listarTodos();
 	}
 	
+	public int gerarProximoId() {
+	    return clienteService.listarTodos().stream()
+	            .mapToInt(Cliente::getId)
+	            .max()
+	            .orElse(0) + 1;
+	}
+
+	
 }

@@ -14,11 +14,9 @@ public class CadastroPsicologoView extends JFrame {
         setSize(400, 400);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
-        setLayout(new GridLayout(10, 2, 5, 5));
+        setLayout(new GridLayout(9, 2, 5, 5));
 
         // Campos
-        
-        JTextField campoId = new JTextField();
         JTextField campoCpf = new JTextField();
         JTextField campoNome = new JTextField();
         JTextField campoEmail = new JTextField();
@@ -29,8 +27,7 @@ public class CadastroPsicologoView extends JFrame {
         JTextField campoDescricao = new JTextField();
         JTextField campoHorario = new JTextField();
 
-        add(new JLabel("ID:"));
-        add(campoId);
+        // Labels e campos
         add(new JLabel("CPF:"));
         add(campoCpf);
         add(new JLabel("Nome:"));
@@ -56,8 +53,11 @@ public class CadastroPsicologoView extends JFrame {
 
         botaoCadastrar.addActionListener(e -> {
             try {
+                PsicologoController controller = new PsicologoController();
+                int novoId = controller.gerarProximoId();
+
                 Psicologo psicologo = new Psicologo(
-                    Integer.parseInt(campoId.getText()),
+                    novoId,
                     campoCpf.getText(),
                     campoNome.getText(),
                     campoEmail.getText(),
@@ -70,7 +70,8 @@ public class CadastroPsicologoView extends JFrame {
                         campoHorario.getText()
                     )
                 );
-                new PsicologoController().cadastrarPsicologo(psicologo);
+                controller.cadastrarPsicologo(psicologo);
+                JOptionPane.showMessageDialog(this, "Psicólogo cadastrado com sucesso!");
                 dispose();
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(this, "Erro: " + ex.getMessage());

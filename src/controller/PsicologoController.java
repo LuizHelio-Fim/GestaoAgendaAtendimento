@@ -24,11 +24,20 @@ public class PsicologoController {
 		}
 	}
 	
-	public Psicologo buscarPorCrp(String crp) {
-		return psicologoService.buscarPorCrp(crp);
+	public Psicologo buscarPorCpf(String cpf) {
+		return psicologoService.buscarPorCpf(cpf);
 	}
 	
 	public List<Psicologo> listarTodos() {
 		return psicologoService.listarTodos();
 	}
+	
+	public int gerarProximoId() {
+	    return psicologoService.listarTodos().stream()
+	            .mapToInt(Psicologo::getId)
+	            .max()
+	            .orElse(0) + 1;
+	}
+
+
 }
