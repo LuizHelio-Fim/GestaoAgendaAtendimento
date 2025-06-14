@@ -71,4 +71,16 @@ public class ConsultaService {
 			}
 			return resultado;
 		}
+		
+		public int gerarProximoId() {
+		    List<Consulta> consultas = consultaRepositorio.carregar();
+		    int maior = 0;
+		    for (Consulta c : consultas) {
+		        if (c.getId() > maior) {
+		            maior = c.getId();
+		        }
+		    }
+		    return maior + 1;
+		}
+
 }

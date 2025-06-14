@@ -30,6 +30,8 @@ public class PedidoAgendamentoService {
 
     public void solicitarAgendamento(PedidoAgendamento pedido) {
         List<PedidoAgendamento> pedidos = pedidoRepositorio.carregar();
+        int novoId = gerarIdPedido(pedidos);
+        pedido.setId(novoId);
         pedidos.add(pedido);
         pedidoRepositorio.salvar(pedidos);
     }
@@ -66,7 +68,7 @@ public class PedidoAgendamentoService {
         
         List<Consulta> consultas = consultaRepositorio.carregar();
         Consulta novaConsulta = new Consulta();
-        novaConsulta.setId(gerarIdConsulta(consultas));
+        novaConsulta.setId(consultaService.gerarProximoId());
         novaConsulta.setCpfCliente(pedidoAceito.getCpfCliente());
         novaConsulta.setCpfPsicologo(pedidoAceito.getCpfPsicologo());
         novaConsulta.setDataHora(pedidoAceito.getDataHoraSolicitada());
@@ -94,6 +96,16 @@ public class PedidoAgendamentoService {
             }
         }
         return false;
+    }
+    
+    private int gerarIdPedido(List<PedidoAgendamento> pedidos) {
+        int maior = 0;
+        for (PedidoAgendamento p : pedidos) {
+            if (p.getId() > maior) {
+                maior = p.getId();
+            }
+        }
+        return maior + 1;
     }
 
 
