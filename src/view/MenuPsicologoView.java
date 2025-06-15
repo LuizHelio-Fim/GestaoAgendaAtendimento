@@ -1,5 +1,6 @@
 package view;
 
+import controller.ClienteController;
 import controller.ConsultaController;
 import controller.PedidoAgendamentoController;
 import model.Consulta;
@@ -56,13 +57,26 @@ public class MenuPsicologoView extends JFrame {
         if (consultas.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Nenhuma consulta agendada.");
         } else {
+            ClienteController clienteController = new ClienteController();
+
             StringBuilder sb = new StringBuilder("Consultas:\n");
             for (Consulta c : consultas) {
-                sb.append("ID: ").append(c.getId())
-                  .append(" | Cliente: ").append(c.getCpfCliente())
-                  .append(" | DataHora: ").append(c.getDataHora())
-                  .append(" | Status: ").append(c.getStatus()).append("\n");
+                String nomeCliente = "Desconhecido";
+                String telefone = "N/A";
+
+                try {
+                    var cliente = clienteController.buscarPorCpf(c.getCpfCliente());
+                    nomeCliente = cliente.getNome();
+                    telefone = cliente.getTelefone();
+                } catch (Exception ignored) {}
+
+                sb.append("Cliente: ").append(nomeCliente)
+                  .append(" | Telefone: ").append(telefone)
+                  .append(" | Data: ").append(c.getDataHora())
+                  .append(" | Status: ").append(c.getStatus())
+                  .append("\n");
             }
+
             JOptionPane.showMessageDialog(this, sb.toString());
         }
     }

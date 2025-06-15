@@ -112,21 +112,29 @@ public class MenuClienteView extends JFrame {
         pedidoController.solicitarAgendamento(pedido);
     }
 
-
-
     private void exibirConsultas() {
         List<Consulta> consultas = consultaController.listarPorCliente(cliente.getCpf());
 
         if (consultas.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Você não possui consultas agendadas.");
         } else {
+            PsicologoController psicologoController = new PsicologoController();
+
             StringBuilder sb = new StringBuilder("Minhas Consultas:\n");
             for (Consulta c : consultas) {
-                sb.append("ID: ").append(c.getId())
-                  .append(" | Psicólogo: ").append(c.getCpfPsicologo())
-                  .append(" | DataHora: ").append(c.getDataHora())
-                  .append(" | Status: ").append(c.getStatus()).append("\n");
+                String nomePsicologo = "Desconhecido";
+
+                try {
+                    var p = psicologoController.buscarPorCpf(c.getCpfPsicologo());
+                    nomePsicologo = p.getNome();
+                } catch (Exception ignored) {}
+
+                sb.append("Psicólogo(a): ").append(nomePsicologo)
+                  .append(" | Data: ").append(c.getDataHora())
+                  .append(" | Status: ").append(c.getStatus())
+                  .append("\n");
             }
+
             JOptionPane.showMessageDialog(this, sb.toString());
         }
     }
