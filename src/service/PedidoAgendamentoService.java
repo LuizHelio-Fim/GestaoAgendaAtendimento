@@ -107,17 +107,6 @@ public class PedidoAgendamentoService {
         }
         return maior + 1;
     }
-
-
-    private int gerarIdConsulta(List<Consulta> consultas) {
-        int maior = 0;
-        for (Consulta c : consultas) {
-            if (c.getId() > maior) {
-                maior = c.getId();
-            }
-        }
-        return maior + 1;
-    }
     
     public List<String> gerarHorariosDisponiveis(String cpfPsicologo, String dataStr) {
         Psicologo psicologo = psicologoService.buscarPorCpf(cpfPsicologo);

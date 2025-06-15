@@ -17,7 +17,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Scanner;
 
-public class AppConsole {
+public class AppConsoleNONFUNCTION {
     public static void main(String[] args) {
     	verificarArquivosCSV();
         Scanner scanner = new Scanner(System.in);

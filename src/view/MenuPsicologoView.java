@@ -13,12 +13,11 @@ import java.util.List;
 public class MenuPsicologoView extends JFrame {
 
     private final Psicologo psicologo;
-    private final PedidoAgendamentoController pedidoController;
     private final ConsultaController consultaController;
 
     public MenuPsicologoView(Psicologo psicologo) {
         this.psicologo = psicologo;
-        this.pedidoController = new PedidoAgendamentoController();
+        new PedidoAgendamentoController();
         this.consultaController = new ConsultaController();
 
         setTitle("Menu do Psicólogo");
